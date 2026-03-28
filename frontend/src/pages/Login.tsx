@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { showErrorToastMsg } from "../utility/ToastMessage";
 import { loginAPI } from "../services/api/authService";
+import { useAuth } from "../contexts/AuthContext";
 
 const schema = z.object({
   email: z.string().email("Enter a valid email address"),
@@ -14,9 +15,7 @@ type FormData = z.infer<typeof schema>;
 
 export function Login() {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const from = (location.state as any)?.from?.pathname || "/dashboard";
+  const { login } = useAuth();
 
   const {
     register,
@@ -27,11 +26,10 @@ export function Login() {
   const onSubmit = async (data: FormData) => {
     try {
       const res = await loginAPI(data);
-      console.log(3333333);
-      console.log(res);
-      // setAuth(result.user, result.accessToken);
-
-      navigate(from, { replace: true });
+      if (res) {
+        await login(res.user, res.accessToken);
+        navigate("/dashboard", { replace: true });
+      }
     } catch (err: any) {
       const msg = err.response?.data?.message || "Invalid email or password";
       showErrorToastMsg(msg);
@@ -43,7 +41,7 @@ export function Login() {
       <div className="w-full max-w-md">
         <div className="card bg-gray-100 p-10">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-primary-900">Login</h1>
+            <h1 className="text-2xl font-bold text-primary-900 mt-4">Login</h1>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

@@ -52,7 +52,7 @@ api.interceptors.response.use(
       logoutFunction();
     }
 
-    return Promise.reject(error); // ✅ important
+    return Promise.reject(error);
   }
 );
 

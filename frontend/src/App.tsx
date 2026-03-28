@@ -21,8 +21,7 @@ function AppWithAuth() {
       <div className="App">
         <Routes>
           <Route path={"/"} element={<Login />} />
-          <Route path="/home1" element={<Login />} />
-          <Route path="/home1" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
 
           <Route
             path={"dashboard"}
