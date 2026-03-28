@@ -56,7 +56,7 @@ npm run dev
 | Name   | Email                            | Password   |
 | ------ | ---------------------------------| ---------- |
 | Rumesh | rumeshlahiru@gmail.com           | Rumesh1234 |
-| Lahiru | torumeshlahiru@gmail.com         | Rumesh1237 |
+| Rumesh2| torumeshlahiru@gmail.com         | Rumesh1237 |
 
 ### ▶️ Run Backend
 
