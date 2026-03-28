@@ -21,13 +21,13 @@ export class UserService {
     return user;
   }
 
-  async findByEmail(email: string): Promise<User> {
+  async validateEmailAndPassword(email: string, password: string): Promise<User | null> {
     const user = this.users.find(u => u.email === email);
-    if (!user) throw new NotFoundException(`User #${email} not found`);
-    return user;
-  }
-
-  async validatePassword(user: User, password: string): Promise<boolean> {
-    return bcrypt.compare(password, user.passwordHash);
+    if (user) {
+      if (await bcrypt.compare(password, user.passwordHash)) {
+        return user;
+      }
+    }
+    return null;
   }
 }
